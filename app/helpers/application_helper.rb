@@ -9,4 +9,8 @@ module ApplicationHelper
       many
     end
   end
+
+  def current_user_header_color
+    current_user&.user_config&.header_color || "#370617"
+  end
 end

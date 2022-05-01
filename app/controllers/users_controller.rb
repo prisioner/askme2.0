@@ -8,6 +8,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
+      session[:user_id] = @user.id
       redirect_to root_path, notice: 'Вы успешно зарегистрировались!'
     else
       flash.now[:alert] = 'Вы неправильно заполнили поля формы регистрации'
@@ -18,6 +19,7 @@ class UsersController < ApplicationController
 
   def edit
     @user = User.find(params[:id])
+    @user.build_user_config unless @user.user_config
   end
 
   def update
@@ -45,7 +47,8 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(
-      :name, :nickname, :email, :password, :password_confirmation
+      :name, :nickname, :email, :password, :password_confirmation,
+      user_config_attributes: [:header_color]
     )
   end
 end

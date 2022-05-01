@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_21_132318) do
+ActiveRecord::Schema.define(version: 2022_05_01_181641) do
 
   create_table "questions", force: :cascade do |t|
     t.text "body"
@@ -18,6 +18,14 @@ ActiveRecord::Schema.define(version: 2022_02_21_132318) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_questions_on_user_id"
+  end
+
+  create_table "user_configs", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.string "header_color", default: "#370617"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_user_configs_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -29,4 +37,5 @@ ActiveRecord::Schema.define(version: 2022_02_21_132318) do
     t.string "password_digest"
   end
 
+  add_foreign_key "user_configs", "users"
 end
